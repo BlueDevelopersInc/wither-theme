@@ -85,9 +85,9 @@ export default ({ server, className }: { server: Server; className?: string }) =
                     <FontAwesomeIcon icon={faServer}/>
                 </div>
                 <div>
-                    <p css={tw`text-lg break-words`}>{server.name}</p>
+                    <p css={tw`text-lg break-words text-neutral-300`}>{server.name}</p>
                     {!!server.description &&
-                    <p css={tw`text-sm text-neutral-300 break-words`}>{server.description}</p>
+                    <p css={tw`text-sm break-words`}>{server.description}</p>
                     }
                 </div>
             </div>
