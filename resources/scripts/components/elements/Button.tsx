@@ -17,7 +17,7 @@ const ButtonStyle = styled.button<Omit<Props, 'isLoading'>>`
         ${props => !props.isSecondary && tw`bg-primary-500 border-primary-600 border text-primary-50`};
 
         &:hover:not(:disabled) {
-            ${tw`bg-primary-600 border-primary-700`};
+            ${tw`border-primary-700`};
         }
     `};
 
@@ -25,7 +25,7 @@ const ButtonStyle = styled.button<Omit<Props, 'isLoading'>>`
         ${tw`border-neutral-600 bg-neutral-500 text-neutral-50`};
 
         &:hover:not(:disabled) {
-            ${tw`bg-neutral-600 border-neutral-700`};
+            ${tw`border-neutral-700`};
         }
     `};
 
@@ -33,12 +33,12 @@ const ButtonStyle = styled.button<Omit<Props, 'isLoading'>>`
         ${tw`border-green-600 bg-green-500 text-green-50`};
 
         &:hover:not(:disabled) {
-            ${tw`bg-green-600 border-green-700`};
+            ${tw`border-green-700`};
         }
 
         ${props => props.isSecondary && css`
             &:active:not(:disabled) {
-                ${tw`bg-green-600 border-green-700`};
+                ${tw`border-green-700`};
             }
         `};
     `};
@@ -60,6 +60,9 @@ const ButtonStyle = styled.button<Omit<Props, 'isLoading'>>`
         }
     `};
 
+    &:hover:not(:disabled) {
+        transform: translateY(-1px);
+    }
     &:disabled { opacity: 0.55; cursor: default }
 `;
 

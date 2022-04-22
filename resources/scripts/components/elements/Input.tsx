@@ -49,6 +49,7 @@ const inputStyle = css<Props>`
 
     &:focus {
         box-shadow: none;
+        border-color: transparent;
     }
 
     &:disabled {
