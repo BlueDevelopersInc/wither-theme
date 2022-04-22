@@ -38,6 +38,10 @@ const inputStyle = css<Props>`
     ${tw`p-3 rounded text-sm transition-all duration-150`};
     ${tw`bg-neutral-600 text-neutral-200 shadow-none`};
 
+    .login-form & {
+        ${tw`bg-neutral-800 border-white hover:border-black`}
+    }
+
     & + .input-help {
         ${tw`mt-1 text-xs`};
         ${tw`text-neutral-200`};
