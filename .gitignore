@@ -9,7 +9,7 @@
 storage/framework/*
 /.idea
 /nbproject
-
+zing-theme.iml
 node_modules
 *.log
 _ide_helper.php
