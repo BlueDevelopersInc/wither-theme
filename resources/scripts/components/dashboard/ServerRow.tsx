@@ -16,16 +16,16 @@ import isEqual from 'react-fast-compare';
 const isAlarmState = (current: number, limit: number): boolean => limit > 0 && (current / (limit * 1024 * 1024) >= 0.90);
 
 const Icon = memo(styled(FontAwesomeIcon)<{ $alarm: boolean }>`
-    ${props => props.$alarm ? tw`text-red-400` : tw`text-neutral-500`};
+    ${props => props.$alarm && tw`text-red-400`};
 `, isEqual);
 
 const IconDescription = styled.p<{ $alarm: boolean }>`
     ${tw`text-sm ml-2`};
-    ${props => props.$alarm ? tw`text-white` : tw`text-neutral-400`};
+    ${props => props.$alarm && tw`text-white`};
 `;
 
 const StatusIndicatorBox = styled(GreyRowBox)<{ $status: ServerPowerState | undefined }>`
-    ${tw`grid grid-cols-12 gap-4 relative`};
+    ${tw`grid grid-cols-12 gap-4 relative px-4`};
 
     & .status-bar {
         ${tw`w-2 bg-red-500 absolute right-0 z-20 rounded-full m-1 opacity-50 transition-all duration-150`};
@@ -81,7 +81,7 @@ export default ({ server, className }: { server: Server; className?: string }) =
     return (
         <StatusIndicatorBox as={Link} to={`/server/${server.id}`} className={className} $status={stats?.status}>
             <div css={tw`flex items-center col-span-12 sm:col-span-5 lg:col-span-6`}>
-                <div className={'icon'} css={tw`mr-4`}>
+                <div css={tw`mr-4`} >
                     <FontAwesomeIcon icon={faServer}/>
                 </div>
                 <div>
@@ -92,8 +92,8 @@ export default ({ server, className }: { server: Server; className?: string }) =
                 </div>
             </div>
             <div css={tw`hidden lg:col-span-2 lg:flex ml-4 justify-end h-full`}>
-                <FontAwesomeIcon icon={faEthernet} css={tw`text-neutral-500`}/>
-                <p css={tw`text-sm text-neutral-400 ml-2`}>
+                <FontAwesomeIcon icon={faEthernet}/>
+                <p css={tw`text-sm ml-2`}>
                     {
                         server.allocations.filter(alloc => alloc.isDefault).map(allocation => (
                             <React.Fragment key={allocation.ip + allocation.port.toString()}>
