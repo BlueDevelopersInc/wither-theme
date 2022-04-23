@@ -215,7 +215,7 @@ export default () => {
             </div>
             {canSendCommands &&
                 <div css={tw`rounded-b bg-neutral-900 text-neutral-100 flex items-baseline`}>
-                    <div css={tw`flex-shrink-0 p-2 font-bold`}>$</div>
+                    <div css={tw`flex-shrink-0 p-2 font-bold`}>/</div>
                     <div css={tw`w-full`}>
                         <CommandInput
                             type={'text'}
