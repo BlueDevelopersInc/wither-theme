@@ -211,7 +211,7 @@ export default () => {
                 ]}
                 style={{ minHeight: '16rem' }}
             >
-                <TerminalDiv id={'terminal'} ref={ref} />
+                <TerminalDiv id={'terminal'}ref={ref}/>
             </div>
             {canSendCommands &&
                 <div css={tw`rounded-b bg-neutral-900 text-neutral-100 flex items-baseline`}>

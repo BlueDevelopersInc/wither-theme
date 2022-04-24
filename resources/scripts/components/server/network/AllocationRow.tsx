@@ -20,7 +20,7 @@ import setPrimaryServerAllocation from '@/api/server/network/setPrimaryServerAll
 import getServerAllocations from '@/api/swr/getServerAllocations';
 import { formatIp } from '@/helpers';
 
-const Code = styled.code`${tw`font-mono py-1 px-2 bg-neutral-900 rounded text-sm inline-block`}`;
+const Code = styled.code`${tw`font-mono py-1 px-2 bg-neutral-600 rounded text-sm inline-block`}`;
 const Label = styled.label`${tw`uppercase text-xs mt-1 text-neutral-400 block px-1 select-none transition-colors duration-150`}`;
 
 interface Props {
@@ -64,9 +64,9 @@ const AllocationRow = ({ allocation }: Props) => {
                 <div css={tw`pl-4 pr-6 text-neutral-400`}>
                     <FontAwesomeIcon icon={faNetworkWired}/>
                 </div>
-                <div css={tw`mr-4 flex-1 md:w-40`}>
+                <div css={tw`mr-4 flex-1 md:w-40 sm:block hidden`}>
                     {allocation.alias ?
-                        <CopyOnClick text={allocation.alias}><Code css={tw`w-40 truncate`}>{allocation.alias}</Code></CopyOnClick> :
+                        <CopyOnClick text={allocation.alias}><Code css={tw`truncate`} style={{ maxWidth: '10rem' }}>{allocation.alias}</Code></CopyOnClick> :
                         <CopyOnClick text={formatIp(allocation.ip)}><Code>{formatIp(allocation.ip)}</Code></CopyOnClick>}
                     <Label>{allocation.alias ? 'Hostname' : 'IP Address'}</Label>
                 </div>

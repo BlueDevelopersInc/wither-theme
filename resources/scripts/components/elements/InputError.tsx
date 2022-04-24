@@ -21,7 +21,7 @@ const InputError = ({ errors, touched, name, children }: Props) => (
         </p>
         :
         <>
-            {children ? <p css={tw`text-xs text-neutral-400 pt-2`}>{children}</p> : null}
+            {children ? <p css={tw`text-xs text-neutral-200 pt-2`}>{children}</p> : null}
         </>
 );
 

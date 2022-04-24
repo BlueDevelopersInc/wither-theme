@@ -59,7 +59,7 @@ export default () => {
 
     return (
         <ServerContentBlock title={'File Manager'} showFlashKey={'files'}>
-            <div css={tw`flex flex-wrap-reverse md:flex-nowrap justify-center mb-4`}>
+            <div css={tw`flex flex-wrap md:flex-nowrap justify-center mb-4`}>
                 <ErrorBoundary>
                     <FileManagerBreadcrumbs
                         renderLeft={
@@ -74,14 +74,14 @@ export default () => {
                 </ErrorBoundary>
                 <Can action={'file.create'}>
                     <ErrorBoundary>
-                        <div css={tw`flex flex-shrink-0 flex-wrap-reverse md:flex-nowrap justify-end mb-4 md:mb-0 ml-0 md:ml-auto`}>
-                            <NewDirectoryButton css={tw`w-full flex-none mt-4 sm:mt-0 sm:w-auto sm:mr-4`}/>
-                            <UploadButton css={tw`flex-1 mr-4 sm:flex-none sm:mt-0`}/>
+                        <div css={tw`flex flex-shrink-0 flex-wrap-reverse md:flex-nowrap justify-end mb-4 md:mb-0 ml-0 md:ml-auto inline-block sm:flex w-full sm:w-auto`}>
+                            <NewDirectoryButton css={tw`w-full flex-none mt-4 sm:mt-0 sm:w-auto sm:mr-4 `}/>
+                            <UploadButton css={tw`flex-1 mr-4 sm:flex-none sm:mt-0 sm:w-auto w-full mt-2 sm:mt-0`}/>
                             <NavLink
                                 to={`/server/${id}/files/new${window.location.hash}`}
                                 css={tw`flex-1 sm:flex-none sm:mt-0`}
                             >
-                                <Button css={tw`w-full`}>
+                                <Button css={tw`w-full mt-2 sm:mt-0`}>
                                     New File
                                 </Button>
                             </NavLink>

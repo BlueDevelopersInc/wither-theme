@@ -106,7 +106,7 @@ export default ({ ...props }: Props) => {
                                 >
                                     <div css={tw`flex-1 mr-4`}>
                                         <p css={tw`text-sm`}>{server.name}</p>
-                                        <p css={tw`mt-1 text-xs text-neutral-400`}>
+                                        <p css={tw`mt-1 text-xs text-neutral-200`}>
                                             {
                                                 server.allocations.filter(alloc => alloc.isDefault).map(allocation => (
                                                     <span key={allocation.ip + allocation.port.toString()}>{allocation.alias || formatIp(allocation.ip)}:{allocation.port}</span>

@@ -79,9 +79,7 @@ module.exports = {
                     syntactic: true,
                 },
             },
-            eslint: isProduction ? undefined : {
-                files: `${path.join(__dirname, '/resources/scripts')}/**/*.{ts,tsx}`,
-            }
+            eslint: undefined
         }),
         process.env.ANALYZE_BUNDLE ? new BundleAnalyzerPlugin({
             analyzerHost: '0.0.0.0',

@@ -98,7 +98,7 @@ export default ({ className }: WithClassname) => {
                             </p>
                             <div css={tw`flex justify-end`}>
                                 <Button css={tw`mt-8`}>
-                                    Create Directory
+                                    Create Folder
                                 </Button>
                             </div>
                         </Form>
