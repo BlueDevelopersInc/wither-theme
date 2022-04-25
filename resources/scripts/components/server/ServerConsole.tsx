@@ -23,38 +23,12 @@ const ServerConsole = () => {
 
     return (
         <ServerContentBlock title={'Console'} css={tw`flex flex-wrap`}>
-            <div css={tw`w-full lg:w-1/4`}>
-                <ServerDetailsBlock/>
-                {isInstalling ?
-                    <div css={tw`mt-4 rounded bg-yellow-500 p-3`}>
-                        <ContentContainer>
-                            <p css={tw`text-sm text-yellow-900`}>
-                                This server is currently running its installation process and most actions are
-                                unavailable.
-                            </p>
-                        </ContentContainer>
-                    </div>
-                    :
-                    isTransferring ?
-                        <div css={tw`mt-4 rounded bg-yellow-500 p-3`}>
-                            <ContentContainer>
-                                <p css={tw`text-sm text-yellow-900`}>
-                                    This server is currently being transferred to another node and all actions
-                                    are unavailable.
-                                </p>
-                            </ContentContainer>
-                        </div>
-                        :
-                        <Can action={[ 'control.start', 'control.stop', 'control.restart' ]} matchAny>
-                            <PowerControls/>
-                        </Can>
-                }
-            </div>
-            <div css={tw`w-full lg:w-3/4 mt-4 lg:mt-0 lg:pl-4`}>
+            <div css={tw`w-full mt-4 lg:mt-0 lg:pl-4`}>
                 <Spinner.Suspense>
                     <ErrorBoundary>
                         <ChunkedConsole/>
                     </ErrorBoundary>
+                    <ServerDetailsBlock/>
                     <ChunkedStatGraphs/>
                 </Spinner.Suspense>
                 <React.Suspense fallback={null}>

@@ -6,7 +6,7 @@ import Spinner from '@/components/elements/Spinner';
 interface Props {
     isLoading?: boolean;
     size?: 'xsmall' | 'small' | 'large' | 'xlarge';
-    color?: 'green' | 'red' | 'primary' | 'grey';
+    color?: 'green' | 'red' | 'primary' | 'grey' | 'yellow';
     isSecondary?: boolean;
 }
 
@@ -27,6 +27,20 @@ const ButtonStyle = styled.button<Omit<Props, 'isLoading'>>`
         &:hover:not(:disabled) {
             ${tw`border-neutral-700`};
         }
+    `};
+
+    ${props => props.color === 'yellow' && css<Props>`
+        ${tw`border-yellow-600 bg-yellow-500 text-yellow-50`};
+
+        &:hover:not(:disabled) {
+            ${tw`border-yellow-700`};
+        }
+
+        ${props => props.isSecondary && css`
+            &:active:not(:disabled) {
+                ${tw`border-yellow-700`};
+            }
+        `};
     `};
 
     ${props => props.color === 'green' && css<Props>`

@@ -45,7 +45,7 @@ export default createGlobalStyle`
         border-right-width: 4px;
         border-left-width: 4px;
         -webkit-border-radius: 9px 4px;
-        -webkit-box-shadow: inset 0 0 0 1px hsl(211, 10%, 53%), inset 0 0 0 4px hsl(209deg 18% 30%);
+        -webkit-box-shadow: inset 0 0 0 1px hsl(208, 96%, 45%);
     }
 
     ::-webkit-scrollbar-track-piece {
@@ -61,8 +61,7 @@ export default createGlobalStyle`
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        -webkit-box-shadow:
-        inset 0 0 0 1px hsl(212, 92%, 43%),
+        -webkit-box-shadow: inset 0 0 0 1px hsl(212, 92%, 43%),
         inset 0 0 0 4px hsl(212, 92%, 43%);
     }
 

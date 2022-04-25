@@ -17,7 +17,7 @@ import { usePersistedState } from '@/plugins/usePersistedState';
 import { SocketEvent, SocketRequest } from '@/components/server/events';
 
 const theme = {
-    background: th`colors.black`.toString(),
+    background: '#0d0d0d',
     cursor: 'transparent',
     black: th`colors.black`.toString(),
     red: '#E54B4B',
@@ -206,15 +206,15 @@ export default () => {
             <SpinnerOverlay visible={!connected} size={'large'} />
             <div
                 css={[
-                    tw`rounded-t p-2 bg-black w-full`,
+                    tw`rounded-t p-2 w-full`,
                     !canSendCommands && tw`rounded-b`,
                 ]}
-                style={{ minHeight: '16rem' }}
+                style={{ minHeight: '16rem', backgroundColor: '#0d0d0d' }}
             >
-                <TerminalDiv id={'terminal'}ref={ref}/>
+                <TerminalDiv id={'terminal'} ref={ref}/>
             </div>
             {canSendCommands &&
-                <div css={tw`rounded-b bg-neutral-900 text-neutral-100 flex items-baseline`}>
+                <div css={tw`rounded-b bg-neutral-700 text-neutral-100 flex items-baseline`}>
                     <div css={tw`flex-shrink-0 p-2 font-bold`}>/</div>
                     <div css={tw`w-full`}>
                         <CommandInput
