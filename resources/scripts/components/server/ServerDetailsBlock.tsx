@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import tw, {TwStyle} from 'twin.macro';
+import tw from 'twin.macro';
 import {
-    faCircle,
     faClock,
-    faEthernet,
     faHdd,
     faInfoCircle,
     faMapMarkerAlt,
@@ -11,42 +9,25 @@ import {
     faMicrochip
 } from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {bytesToHuman, formatIp, megabytesToHuman} from '@/helpers';
+import {bytesToHuman, megabytesToHuman} from '@/helpers';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import {ServerContext} from '@/state/server';
-import CopyOnClick from '@/components/elements/CopyOnClick';
 import {SocketEvent, SocketRequest} from '@/components/server/events';
 import UptimeDuration from '@/components/server/UptimeDuration';
 import ContentContainer from '@/components/elements/ContentContainer';
 import Can from '@/components/elements/Can';
 import PowerControls from '@/components/server/PowerControls';
 
-interface Stats {
+export interface Stats {
     memory: number;
     cpu: number;
     disk: number;
     uptime: number;
 }
 
-function statusToColor(status: string | null, installing: boolean): TwStyle {
-    if (installing) {
-        status = '';
-    }
-
-    switch (status) {
-        case 'offline':
-            return tw`text-red-500`;
-        case 'running':
-            return tw`text-green-500`;
-        default:
-            return tw`text-yellow-500`;
-    }
-}
-
 const ServerDetailsBlock = (props: {mobile?: boolean}) => {
     const [ stats, setStats ] = useState<Stats>({ memory: 0, cpu: 0, disk: 0, uptime: 0 });
 
-    const status = ServerContext.useStoreState(state => state.status.value);
     const connected = ServerContext.useStoreState(state => state.socket.connected);
     const instance = ServerContext.useStoreState(state => state.socket.instance);
 
@@ -72,6 +53,7 @@ const ServerDetailsBlock = (props: {mobile?: boolean}) => {
         }
 
         instance.addListener(SocketEvent.STATS, statsListener);
+        if (!props.mobile)
         instance.send(SocketRequest.SEND_STATS);
 
         return () => {
@@ -79,13 +61,9 @@ const ServerDetailsBlock = (props: {mobile?: boolean}) => {
         };
     }, [ instance, connected ]);
 
-    const name = ServerContext.useStoreState(state => state.server.data!.name);
     const isInstalling = ServerContext.useStoreState(state => state.server.data!.isInstalling);
     const isTransferring = ServerContext.useStoreState(state => state.server.data!.isTransferring);
     const limits = ServerContext.useStoreState(state => state.server.data!.limits);
-    const primaryAllocation = ServerContext.useStoreState(state => state.server.data!.allocations.filter(alloc => alloc.isDefault).map(
-        allocation => (allocation.alias || formatIp(allocation.ip)) + ':' + allocation.port,
-    )).toString();
     const node = ServerContext.useStoreState(state => state.server.data!.node);
 
     const diskLimit = limits.disk ? megabytesToHuman(limits.disk) : 'Unlimited';
@@ -121,22 +99,8 @@ const ServerDetailsBlock = (props: {mobile?: boolean}) => {
                     </Can>
             }
             <p css={tw`text-xs uppercase`}>
-                <FontAwesomeIcon
-                    icon={faCircle}
-                    fixedWidth
-                    css={[
-                        tw`mr-1`,
-                        statusToColor(status, isInstalling || isTransferring),
-                    ]}
-                />
-                &nbsp;{!status ? 'Connecting...' : (isInstalling ? 'Installing' : (isTransferring) ? 'Transferring' : status)}
+
             </p>
-            <CopyOnClick text={primaryAllocation}>
-                <p css={tw`text-xs mt-2`}>
-                    <FontAwesomeIcon icon={faEthernet} fixedWidth css={tw`mr-1`}/>
-                    <code css={tw`ml-1`}>{primaryAllocation}</code>
-                </p>
-            </CopyOnClick>
             <p css={tw`text-xs mt-2`}>
                 <FontAwesomeIcon icon={faMapMarkerAlt} fixedWidth css={tw`mr-1`}/>
                 <code css={tw`ml-1`}>{node}</code>
@@ -147,17 +111,17 @@ const ServerDetailsBlock = (props: {mobile?: boolean}) => {
                 <code css={tw`ml-1`}>(<UptimeDuration uptime={stats.uptime / 1000}/>)</code>
             </p>
             }
+            {props.mobile && <>
             <p css={tw`text-xs mt-2`}>
-                <FontAwesomeIcon icon={faMicrochip} fixedWidth css={tw`mr-1`}/> {stats.cpu.toFixed(2)}%
-                <span css={tw`text-neutral-500`}> / {cpuLimit}</span>
+                <FontAwesomeIcon icon={faMicrochip} fixedWidth css={tw`mr-1`}/> {stats.cpu.toFixed(2)}% / {cpuLimit}
             </p>
             <p css={tw`text-xs mt-2`}>
-                <FontAwesomeIcon icon={faMemory} fixedWidth css={tw`mr-1`}/> {bytesToHuman(stats.memory)}
-                <span css={tw`text-neutral-500`}> / {memoryLimit}</span>
+                <FontAwesomeIcon icon={faMemory} fixedWidth css={tw`mr-1`}/> {bytesToHuman(stats.memory)} / {memoryLimit}
             </p>
+            </>
+            }
             <p css={tw`text-xs mt-2`}>
-                <FontAwesomeIcon icon={faHdd} fixedWidth css={tw`mr-1`}/>&nbsp;{bytesToHuman(stats.disk)}
-                <span css={tw`text-neutral-500`}> / {diskLimit}</span>
+                <FontAwesomeIcon icon={faHdd} fixedWidth css={tw`mr-1`}/>&nbsp;{bytesToHuman(stats.disk)} / {diskLimit}
             </p>
         </TitledGreyBox>
     );
