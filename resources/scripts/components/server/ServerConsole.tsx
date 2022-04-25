@@ -77,7 +77,7 @@ const ServerConsole = () => {
                     </ServerInformationBox>
                     <ServerInformationBox text={"Server ID"} copy={id}>{id}</ServerInformationBox>
                     <ServerInformationBox text={"Memory Usage"}>{bytesToHuman(stats.memory)} / {memoryLimit}</ServerInformationBox>
-                    <ServerInformationBox text={"CPU Usage"}>{bytesToHuman(stats.cpu)} / {cpuLimit}</ServerInformationBox>
+                    <ServerInformationBox text={"CPU Usage"}>{stats.cpu.toFixed(2)}% / {cpuLimit}</ServerInformationBox>
                     <ServerInformationBox text={"Server Status"} mobile>
                         <FontAwesomeIcon
                             icon={faCircle}
