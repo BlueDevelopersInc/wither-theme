@@ -43,7 +43,7 @@ function statusToColor(status: string | null, installing: boolean): TwStyle {
     }
 }
 
-const ServerDetailsBlock = () => {
+const ServerDetailsBlock = (props: {mobile?: boolean}) => {
     const [ stats, setStats ] = useState<Stats>({ memory: 0, cpu: 0, disk: 0, uptime: 0 });
 
     const status = ServerContext.useStoreState(state => state.status.value);
@@ -93,7 +93,7 @@ const ServerDetailsBlock = () => {
     const cpuLimit = limits.cpu ? limits.cpu + '%' : 'Unlimited';
 
     return (
-        <TitledGreyBox css={tw`break-words sm:mt-0 mt-2 w-full sm:w-1/3`} title={'SERVER INFORMATION'} icon={faInfoCircle}>
+        <TitledGreyBox css={[tw`break-words w-full sm:w-1/3`, props.mobile ? tw`block sm:hidden mb-4` : tw`hidden sm:block`] } title={'SERVER INFORMATION'} icon={faInfoCircle}>
             {isInstalling ?
                 <div css={tw`mb-4 rounded bg-yellow-500 p-3`}>
                     <ContentContainer>

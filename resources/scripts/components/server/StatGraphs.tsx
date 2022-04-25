@@ -70,7 +70,7 @@ const chartDefaults = (ticks?: Chart.TickOptions | undefined): ChartConfiguratio
     },
 });
 
-export default (props: {renderCenter: React.ReactNode}) => {
+export default (props: {renderCenter: React.ReactNode, renderFirst: React.ReactNode}) => {
     const status = ServerContext.useStoreState(state => state.status.value);
     const limits = ServerContext.useStoreState(state => state.server.data!.limits);
 
@@ -132,6 +132,7 @@ export default (props: {renderCenter: React.ReactNode}) => {
 
     return (
         <div css={tw`flex flex-wrap mt-4`}>
+            {props.renderFirst}
             <div css={tw`w-full sm:w-1/3`}>
                 <TitledGreyBox title={'Memory usage'} icon={faMemory} css={tw`mr-0 sm:mr-4`}>
                     {status !== 'offline' ?
