@@ -28,8 +28,7 @@ const ServerConsole = () => {
                     <ErrorBoundary>
                         <ChunkedConsole/>
                     </ErrorBoundary>
-                    <ServerDetailsBlock/>
-                    <ChunkedStatGraphs/>
+                    <ChunkedStatGraphs renderCenter={<ServerDetailsBlock/>}/>
                 </Spinner.Suspense>
                 <React.Suspense fallback={null}>
                     {eggFeatures.includes('eula') && <EulaModalFeature/>}

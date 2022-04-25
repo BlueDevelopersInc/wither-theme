@@ -8,6 +8,7 @@ import { faMemory, faMicrochip } from '@fortawesome/free-solid-svg-icons';
 import tw from 'twin.macro';
 import { SocketEvent } from '@/components/server/events';
 import useWebsocketEvent from '@/plugins/useWebsocketEvent';
+import ServerDetailsBlock from '@/components/server/ServerDetailsBlock';
 
 const chartDefaults = (ticks?: Chart.TickOptions | undefined): ChartConfiguration => ({
     type: 'line',
@@ -69,7 +70,7 @@ const chartDefaults = (ticks?: Chart.TickOptions | undefined): ChartConfiguratio
     },
 });
 
-export default () => {
+export default (props: {renderCenter: React.ReactNode}) => {
     const status = ServerContext.useStoreState(state => state.status.value);
     const limits = ServerContext.useStoreState(state => state.server.data!.limits);
 
@@ -131,7 +132,7 @@ export default () => {
 
     return (
         <div css={tw`flex flex-wrap mt-4`}>
-            <div css={tw`w-full sm:w-1/2`}>
+            <div css={tw`w-full sm:w-1/3`}>
                 <TitledGreyBox title={'Memory usage'} icon={faMemory} css={tw`mr-0 sm:mr-4`}>
                     {status !== 'offline' ?
                         <canvas
@@ -147,7 +148,8 @@ export default () => {
                     }
                 </TitledGreyBox>
             </div>
-            <div css={tw`w-full sm:w-1/2 mt-4 sm:mt-0`}>
+            {props.renderCenter}
+            <div css={tw`w-full sm:w-1/3 mt-4 sm:mt-0`}>
                 <TitledGreyBox title={'CPU usage'} icon={faMicrochip} css={tw`ml-0 sm:ml-4`}>
                     {status !== 'offline' ?
                         <canvas id={'cpu_chart'} ref={cpuRef} aria-label={'Server CPU Usage Graph'} role={'img'}/>

@@ -93,7 +93,7 @@ const ServerDetailsBlock = () => {
     const cpuLimit = limits.cpu ? limits.cpu + '%' : 'Unlimited';
 
     return (
-        <TitledGreyBox css={tw`break-words mt-2`} title={'SERVER INFORMATION'} icon={faInfoCircle}>
+        <TitledGreyBox css={tw`break-words sm:mt-0 mt-2 w-full sm:w-1/3`} title={'SERVER INFORMATION'} icon={faInfoCircle}>
             {isInstalling ?
                 <div css={tw`mb-4 rounded bg-yellow-500 p-3`}>
                     <ContentContainer>
