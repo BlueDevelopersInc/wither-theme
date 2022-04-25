@@ -105,12 +105,10 @@ const ServerDetailsBlock = (props: {mobile?: boolean}) => {
                 <FontAwesomeIcon icon={faMapMarkerAlt} fixedWidth css={tw`mr-1`}/>
                 <code css={tw`ml-1`}>{node}</code>
             </p>
-            {stats.uptime > 0 &&
             <p css={tw`text-xs mt-2`}>
                 <FontAwesomeIcon icon={faClock} fixedWidth css={tw`mr-1`}/>
                 <code css={tw`ml-1`}>(<UptimeDuration uptime={stats.uptime / 1000}/>)</code>
             </p>
-            }
             {props.mobile && <>
             <p css={tw`text-xs mt-2`}>
                 <FontAwesomeIcon icon={faMicrochip} fixedWidth css={tw`mr-1`}/> {stats.cpu.toFixed(2)}% / {cpuLimit}
