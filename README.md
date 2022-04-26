@@ -1,14 +1,14 @@
 # Pterodactyl Wither Theme
-This is a theme based on witherhosting's panel theme. This adds UI of Witherhosting to your panel.
-**NOTE:** This does not include features provided by their panel, or features they removed
+This is a pterodactyl theme inspired by WitherHosting
 
 ![Image](/.github/images/theme-desktop.gif)
 ![Image](/.github/images/theme-mobile.gif)
 # Compatibility with addons/plugins
-This theme may not be compatible with some (if not most) addons or plugins
+
+This theme may not be compatible with some (if not most) addons or plugins, but if there is one that you really need, you can contact me on discord ill try help you make it compatible, Discord: BlueTree242#7542
 
 # Installation
-By installing this panel you agree to use a development build of pterodactyl panel, and removal of any other themes or plugins/addons installed on your panel
+By installing this panel you agree to use a development build of pterodactyl panel, and removal of any other themes or plugins/addons installed on your panel (you can reinstall them, some plugins may need some other modifications to get stuff working with this theme)
 
 1. Clone this repo somewhere on your machine
 2. Copy all the files to the panel installation directory, usually at `/var/www/pterodactyl`. 
