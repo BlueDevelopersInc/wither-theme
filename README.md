@@ -14,4 +14,4 @@ By installing this panel you agree to use a development build of pterodactyl pan
 2. Copy all the files to the panel installation directory, usually at `/var/www/pterodactyl`. 
 3. Build the panel, [here is how](https://pterodactyl.io/community/customization/panel.html)
 
-And then you have a fresh installation of pterodactyl, with this theme (everything you set up before will not be removed ofc)
+And then you have a fresh installation of pterodactyl, with this theme (servers, users or any data saved by pterodactyl won't get removed)
