@@ -47,6 +47,14 @@ const inputStyle = css<Props>`
         ${tw`text-neutral-200`};
     }
 
+    &::placeholder {
+        ${tw`text-neutral-200`}
+    }
+
+    &.plugins-query {
+        ${tw`sm:mr-4 sm:w-8/12`}
+    }
+
     &:required, &:invalid {
         ${tw`shadow-none`};
     }

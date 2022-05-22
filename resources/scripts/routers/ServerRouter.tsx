@@ -32,6 +32,7 @@ import {
     faFolderOpen,
     faNetworkWired,
     faPlay,
+    faPlug,
     faTerminal,
     faUsers
 } from '@fortawesome/free-solid-svg-icons';
@@ -41,6 +42,7 @@ import ServerRestoreSvg from '@/assets/images/server_restore.svg';
 import ServerErrorSvg from '@/assets/images/server_error.svg';
 import MainContainer from '@/components/elements/MainContainer';
 import NavigationBar, { NavigationComponent } from '@/components/NavigationBar';
+import PluginsContainer from '@/components/server/plugins/PluginsContainer';
 
 const ConflictStateRenderer = () => {
     const status = ServerContext.useStoreState(state => state.server.data?.status || null);
@@ -124,6 +126,9 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                     <Can action={'startup.*'}>
                         <NavigationComponent link={`${match.url}/startup`} name={'Startup'} icon={faPlay}/>
                     </Can>
+                    <Can action={'file.create'}>
+                        <NavigationComponent link={`${match.url}/plugins`} name={'Plugins'} icon={faPlug}/>
+                    </Can>
                     <Can action={['settings.*', 'file.sftp']} matchAny>
                         <NavigationComponent link={`${match.url}/settings`} name={'Settings'} icon={faCogs}/>
                     </Can>
@@ -190,6 +195,11 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                                             </RequireServerPermission>
                                         </Route>
                                         <Route path={`${match.path}/startup`} component={StartupContainer} exact/>
+                                        <Route path={`${match.path}/plugins`} exact>
+                                            <RequireServerPermission permissions={'files.create'}>
+                                                <PluginsContainer/>
+                                            </RequireServerPermission>
+                                        </Route>
                                         <Route path={`${match.path}/settings`} component={SettingsContainer} exact/>
                                         <Route path={'*'} component={NotFound}/>
                                     </Switch>
