@@ -21,14 +21,14 @@ export interface Resource {
     premium: boolean,
 }
 const PluginIcon = styled.img`
-    ${tw`w-12`}
+    ${tw`w-12 my-auto`}
 `
 
 export default (props: { resource: Resource }) => {
-    return <TitledGreyBox css={[tw`text-sm uppercase w-full sm:mr-4 mb-4 mx-auto`, `@media (min-width: 640px) {width: 48%}`]} title={
+    return <TitledGreyBox css={[tw`text-sm uppercase w-full mb-4 mx-0`, `@media (min-width: 640px) {width: 49%}`]} title={
         <p>{props.resource.name}</p>
     }>
-        <div css={tw`m-4`}>
+        <div css={tw`my-4`}>
             <div css={tw`flex w-full`}>
                 {props.resource.icon.data === "" ? defaultIcon : <PluginIcon src={`data:image/jpeg;base64,${props.resource.icon.data}`} />}
                 <p css={tw`my-auto ml-8`}>{props.resource.tag}</p>
