@@ -32,10 +32,10 @@ export default () => {
 
     function update(page: number) {
         setResources(null)
-        clearFlashes("server:plugins")
         getResources(pageCount, searchQuery, page).then(r => {
             setResources(r.resources);
             setMaxPages(r.maxPages);
+            clearFlashes("server:plugins");
         }).catch(error => {
             clearAndAddHttpError({ key: "server:plugins", error })
         });
