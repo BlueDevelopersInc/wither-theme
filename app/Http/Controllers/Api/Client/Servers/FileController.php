@@ -285,7 +285,7 @@ class FileController extends ClientApiController
         $server->audit(AuditLog::SERVER__FILESYSTEM_PULL, function (AuditLog $audit, Server $server) use ($request) {
             $audit->metadata = ['directory' => $request->input('directory'), 'url' => $request->input('url'), 'file_name' => $request->input('file_name'), 'foreground' => $request->input('foreground')];
 
-            $this->fileRepository->setServer($server)->pull($request->input('url'), $request->input('directory'));
+            $this->fileRepository->setServer($server)->pull($request->input('url'), $request->input('directory'), $request->input('file_name'), $request->input('foreground'));
         });
 
         return new JsonResponse([], Response::HTTP_NO_CONTENT);
