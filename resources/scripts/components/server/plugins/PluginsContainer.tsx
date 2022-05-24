@@ -1,5 +1,5 @@
 import ServerContentBlock from "@/components/elements/ServerContentBlock"
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import tw from 'twin.macro';
 import Input from "@/components/elements/Input";
@@ -20,6 +20,17 @@ export default () => {
     const [pageNumber, setPageNumber] = useState<number>(0);
     const [maxPages, setMaxPages] = useState<number>(0)
     const { clearFlashes, clearAndAddHttpError } = useFlash();
+    const queryInput = createRef<HTMLInputElement>();
+    useEffect(() => {
+        const listener = (event: KeyboardEvent) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                setSearchQuery(queryInput.current!.value);
+            }
+        }
+        queryInput.current?.addEventListener("keypress", listener)
+        return () => queryInput.current?.removeEventListener("keypress", listener)
+    }, [queryInput])
     useEffect(() => {
         setPageNumber(1)
         update(1);
@@ -44,7 +55,7 @@ export default () => {
     return <ServerContentBlock title="Plugin Manager">
         <FlashMessageRender byKey={'server:plugins'} css={tw`mb-4`} />
         <div css={tw`sm:flex`}>
-            <Input placeholder="DiscordSRVUtils" name="query" className="plugins-query" onChange={e => setSearchQuery(e.currentTarget.value)} />
+            <Input placeholder="DiscordSRVUtils" name="query" className="plugins-query" ref={queryInput} />
             <Select css={tw`sm:w-1/3`} onChange={e => { setPageCount(parseInt(e.target.value)) }} defaultValue="10">
                 <option value="10">10</option>
                 <option value="25">25</option>
@@ -83,12 +94,12 @@ const PageShuffle = (props: { page: number, maxPages: number, updatePage: Functi
         else return 1;
     }
     function getButtons() {
-        const buttons : JSX.Element[] = []
+        const buttons: JSX.Element[] = []
         for (let i = getFirstToDisplay(); i <= getLastToDisplay(); i++) {
             if (i <= props.maxPages)
-            buttons.push(
-                <PageButton key={i} css={i === props.page ? undefined : tw`bg-transparent`} onClick={i == props.page ? undefined : e => props.updatePage(i)}>{i}</PageButton>
-            )
+                buttons.push(
+                    <PageButton key={i} css={i === props.page ? undefined : tw`bg-transparent`} onClick={i == props.page ? undefined : e => props.updatePage(i)}>{i}</PageButton>
+                )
         }
 
         return <>{buttons}</>

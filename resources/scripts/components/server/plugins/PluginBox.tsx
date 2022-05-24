@@ -40,6 +40,7 @@ export default (props: { resource: Resource }) => {
     const [isInstalling, setInstalling] = useState<boolean>(false)
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const [installed, setInstalled] = useState<boolean>(false)
+    
     function install() {
         if (uuid == undefined) return;
         setInstalling(true);
