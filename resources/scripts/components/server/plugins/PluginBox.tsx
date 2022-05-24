@@ -43,7 +43,7 @@ export default (props: { resource: Resource }) => {
     function install() {
         if (uuid == undefined) return;
         setInstalling(true);
-        pullFile(uuid, "/plugins", `https://cdn.spiget.org/file/spiget-resources/${props.resource.id}.jar`, `${props.resource.name}-${props.resource.version.id + props.resource.file.type}`, false)
+        pullFile(uuid, "/plugins", `https://cdn.spiget.org/file/spiget-resources/${props.resource.id}.jar`, `${props.resource.file.url.split('/')[1].split('.')[0]}-${props.resource.version.id + props.resource.file.type}`, false)
             .then(r => {
                 setInstalling(false);
                 setInstalled(true);
