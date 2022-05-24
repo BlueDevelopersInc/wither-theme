@@ -34,22 +34,17 @@ export interface Resource {
 const PluginIcon = styled.img`
     ${tw`w-12 my-auto`}
 `
-const githubExternalReg = /https:\/\/github\.com\/[a-zA-Z0-9.-]+\/[a-zA-Z0-90-9.-]+\/releases\/download\/[a-zA-Z0-9.-]+\/[a-zA-Z0-9.-]+\.jar/;
+
 export default (props: { resource: Resource }) => {
     const uuid = ServerContext.useStoreState(state => state.server.data?.uuid);
     const [isInstalling, setInstalling] = useState<boolean>(false)
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const [installed, setInstalled] = useState<boolean>(false)
-
-    function canInstall() : boolean {
-        return !props.resource.premium && (props.resource.file.type !== 'external' || githubExternalReg.test(props.resource.file.externalUrl))
-    }
+    
     function install() {
         if (uuid == undefined) return;
         setInstalling(true);
-        pullFile(uuid, "/plugins",props.resource.file.type !== 'external' ?
-         `https://cdn.spiget.org/file/spiget-resources/${props.resource.id}.jar` : 
-         props.resource.file.externalUrl, `${decodeURIComponent(props.resource.file.url.split('/')[1].split('.')[0])}-${props.resource.version.id + props.resource.file.type}`, false)
+        pullFile(uuid, "/plugins", `https://cdn.spiget.org/file/spiget-resources/${props.resource.id}.jar`, `${decodeURIComponent(props.resource.file.url.split('/')[1].split('.')[0])}-${props.resource.version.id + props.resource.file.type}`, false)
             .then(r => {
                 setInstalling(false);
                 setInstalled(true);
@@ -77,7 +72,7 @@ export default (props: { resource: Resource }) => {
                 {' '}VIEW
             </Button>
             {
-                canInstall() &&
+                !props.resource.premium && props.resource.file.type !== 'external' &&
                 <>
                     <Button size="xsmall" onClick={e => install()} disabled={isInstalling || installed} css={isInstalling || installed ? tw`w-16` : undefined}>
 
