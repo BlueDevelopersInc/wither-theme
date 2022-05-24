@@ -267,7 +267,7 @@ class DaemonFileRepository extends DaemonRepository
      *
      * @throws \Pterodactyl\Exceptions\Http\Connection\DaemonConnectionException
      */
-    public function pull(string $url, ?string $directory, ?string $file_name, ?boolean $foreground): ResponseInterface
+    public function pull(string $url, ?string $directory, ?string $file_name, ?bool $foreground): ResponseInterface
     {
         Assert::isInstanceOf($this->server, Server::class);
 
