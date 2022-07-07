@@ -1,6 +1,6 @@
 import TransferListener from '@/components/server/TransferListener';
-import React, {useEffect, useState} from 'react';
-import {Route, RouteComponentProps, Switch} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 import ServerConsole from '@/components/server/ServerConsole';
 import TransitionRouter from '@/TransitionRouter';
 import WebsocketHandler from '@/components/server/WebsocketHandler';
@@ -32,6 +32,7 @@ import {
     faFolderOpen,
     faNetworkWired,
     faPlay,
+    faPlug,
     faTerminal,
     faUsers
 } from '@fortawesome/free-solid-svg-icons';
@@ -41,6 +42,8 @@ import ServerRestoreSvg from '@/assets/images/server_restore.svg';
 import ServerErrorSvg from '@/assets/images/server_error.svg';
 import MainContainer from '@/components/elements/MainContainer';
 import NavigationBar, { NavigationComponent } from '@/components/NavigationBar';
+import PluginsContainer from '@/components/server/plugins/PluginsContainer';
+import isEqual from 'react-fast-compare';
 
 const ConflictStateRenderer = () => {
     const status = ServerContext.useStoreState(state => state.server.data?.status || null);
@@ -71,7 +74,7 @@ const ConflictStateRenderer = () => {
 
 const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) => {
     const rootAdmin = useStoreState(state => state.user.data!.rootAdmin);
-    const [ error, setError ] = useState('');
+    const [error, setError] = useState('');
 
     const id = ServerContext.useStoreState(state => state.server.data?.id);
     const uuid = ServerContext.useStoreState(state => state.server.data?.uuid);
@@ -79,6 +82,7 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
     const serverId = ServerContext.useStoreState(state => state.server.data?.internalId);
     const getServer = ServerContext.useStoreActions(actions => actions.server.getServer);
     const clearServerState = ServerContext.useStoreActions(actions => actions.clearServerState);
+    const eggFeatures = ServerContext.useStoreState(state => {return state.server.data === undefined ? [] : state.server.data!.eggFeatures}, isEqual);
 
     useEffect(() => () => {
         clearServerState();
@@ -96,36 +100,41 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
         return () => {
             clearServerState();
         };
-    }, [ match.params.id ]);
+    }, [match.params.id]);
 
     return (
         <React.Fragment key={'server-router'}>
             <CSSTransition timeout={150} classNames={'fade'} appear in>
                 <NavigationBar>
-                    <NavigationComponent link={`${match.url}`} name={'Console'} icon={faTerminal} exact/>
+                    <NavigationComponent link={`${match.url}`} name={'Console'} icon={faTerminal} exact />
                     <Can action={'file.*'}>
-                        <NavigationComponent link={`${match.url}/files`} name={'File Manager'} icon={faFolderOpen}/>
+                        <NavigationComponent link={`${match.url}/files`} name={'File Manager'} icon={faFolderOpen} />
                     </Can>
                     <Can action={'database.*'}>
-                        <NavigationComponent link={`${match.url}/databases`} name={'Databases'} icon={faDatabase}/>
+                        <NavigationComponent link={`${match.url}/databases`} name={'Databases'} icon={faDatabase} />
                     </Can>
                     <Can action={'schedule.*'}>
-                        <NavigationComponent link={`${match.url}/schedules`} name={'Schedules'} icon={faCalendarCheck}/>
+                        <NavigationComponent link={`${match.url}/schedules`} name={'Schedules'} icon={faCalendarCheck} />
                     </Can>
                     <Can action={'user.*'}>
-                        <NavigationComponent link={`${match.url}/users`} name={'Users'} icon={faUsers}/>
+                        <NavigationComponent link={`${match.url}/users`} name={'Users'} icon={faUsers} />
                     </Can>
                     <Can action={'backup.*'}>
-                        <NavigationComponent link={`${match.url}/backups`} name={'Backups'} icon={faCloudUploadAlt}/>
+                        <NavigationComponent link={`${match.url}/backups`} name={'Backups'} icon={faCloudUploadAlt} />
                     </Can>
                     <Can action={'allocation.*'}>
-                        <NavigationComponent link={`${match.url}/network`} name={'Network'} icon={faNetworkWired}/>
+                        <NavigationComponent link={`${match.url}/network`} name={'Network'} icon={faNetworkWired} />
                     </Can>
                     <Can action={'startup.*'}>
-                        <NavigationComponent link={`${match.url}/startup`} name={'Startup'} icon={faPlay}/>
+                        <NavigationComponent link={`${match.url}/startup`} name={'Startup'} icon={faPlay} />
                     </Can>
+                    {eggFeatures.includes('eula') && //temporary solution to make the tab only display for servers that support it (might also appear for vanilla)
+                        <Can action={'file.create'}>
+                            <NavigationComponent link={`${match.url}/plugins`} name={'Plugins'} icon={faPlug} />
+                        </Can>
+                    }
                     <Can action={['settings.*', 'file.sftp']} matchAny>
-                        <NavigationComponent link={`${match.url}/settings`} name={'Settings'} icon={faCogs}/>
+                        <NavigationComponent link={`${match.url}/settings`} name={'Settings'} icon={faCogs} />
                     </Can>
                     {rootAdmin &&
                     <NavigationComponent link={'/admin/servers/view/' + serverId} name={'Edit Server'}
@@ -135,63 +144,69 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
             </CSSTransition>
             {(!uuid || !id) ?
                 error ?
-                    <ServerError message={error}/>
+                    <ServerError message={error} />
                     :
-                    <Spinner size={'large'} centered/>
+                    <Spinner size={'large'} centered />
                 :
                 <>
                     <MainContainer>
-                        <InstallListener/>
-                        <TransferListener/>
-                        <WebsocketHandler/>
+                        <InstallListener />
+                        <TransferListener />
+                        <WebsocketHandler />
                         {(inConflictState && (!rootAdmin || (rootAdmin && !location.pathname.endsWith(`/server/${id}`)))) ?
-                            <ConflictStateRenderer/>
+                            <ConflictStateRenderer />
                             :
                             <ErrorBoundary>
                                 <TransitionRouter>
                                     <Switch location={location}>
-                                        <Route path={`${match.path}`} component={ServerConsole} exact/>
+                                        <Route path={`${match.path}`} component={ServerConsole} exact />
                                         <Route path={`${match.path}/files`} exact>
                                             <RequireServerPermission permissions={'file.*'}>
-                                                <FileManagerContainer/>
+                                                <FileManagerContainer />
                                             </RequireServerPermission>
                                         </Route>
                                         <Route path={`${match.path}/files/:action(edit|new)`} exact>
                                             <Spinner.Suspense>
-                                                <FileEditContainer/>
+                                                <FileEditContainer />
                                             </Spinner.Suspense>
                                         </Route>
                                         <Route path={`${match.path}/databases`} exact>
                                             <RequireServerPermission permissions={'database.*'}>
-                                                <DatabasesContainer/>
+                                                <DatabasesContainer />
                                             </RequireServerPermission>
                                         </Route>
                                         <Route path={`${match.path}/schedules`} exact>
                                             <RequireServerPermission permissions={'schedule.*'}>
-                                                <ScheduleContainer/>
+                                                <ScheduleContainer />
                                             </RequireServerPermission>
                                         </Route>
                                         <Route path={`${match.path}/schedules/:id`} exact>
-                                            <ScheduleEditContainer/>
+                                            <ScheduleEditContainer />
                                         </Route>
                                         <Route path={`${match.path}/users`} exact>
                                             <RequireServerPermission permissions={'user.*'}>
-                                                <UsersContainer/>
+                                                <UsersContainer />
                                             </RequireServerPermission>
                                         </Route>
                                         <Route path={`${match.path}/backups`} exact>
                                             <RequireServerPermission permissions={'backup.*'}>
-                                                <BackupContainer/>
+                                                <BackupContainer />
                                             </RequireServerPermission>
                                         </Route>
                                         <Route path={`${match.path}/network`} exact>
                                             <RequireServerPermission permissions={'allocation.*'}>
-                                                <NetworkContainer/>
+                                                <NetworkContainer />
                                             </RequireServerPermission>
                                         </Route>
-                                        <Route path={`${match.path}/startup`} component={StartupContainer} exact/>
-                                        <Route path={`${match.path}/settings`} component={SettingsContainer} exact/>
-                                        <Route path={'*'} component={NotFound}/>
+                                        <Route path={`${match.path}/startup`} component={StartupContainer} exact />
+
+                                        <Route path={`${match.path}/plugins`} exact>
+                                            <RequireServerPermission permissions={'files.create'}>
+                                                <PluginsContainer />
+                                            </RequireServerPermission>
+                                        </Route>
+                                        <Route path={`${match.path}/settings`} component={SettingsContainer} exact />
+                                        <Route path={'*'} component={NotFound} />
                                     </Switch>
                                 </TransitionRouter>
                             </ErrorBoundary>
@@ -207,6 +222,6 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
 
 export default (props: RouteComponentProps<any>) => (
     <ServerContext.Provider>
-        <ServerRouter {...props}/>
+        <ServerRouter {...props} />
     </ServerContext.Provider>
 );

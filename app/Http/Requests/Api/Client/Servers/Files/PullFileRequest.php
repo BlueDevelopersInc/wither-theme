@@ -21,6 +21,8 @@ class PullFileRequest extends ClientApiRequest implements ClientPermissionsReque
         return [
             'url' => 'required|string|url',
             'directory' => 'sometimes|nullable|string',
+            'file_name' => 'sometimes|nullable|string',
+            'foreground' => 'sometimes|nullable|boolean',
         ];
     }
 }
