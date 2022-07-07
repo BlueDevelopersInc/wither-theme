@@ -7,7 +7,7 @@ This is a pterodactyl theme inspired by WitherHosting
 
 This theme may not be compatible with some (if not most) addons or plugins, but if there is one that you really need, you can contact me on discord ill try help you make it compatible, Discord: BlueTree242#7542
 
-## Note:
+## Notes:
 1. This theme comes with a plugins manager, not the official one, just one that i made myself! Just make sure you are using the latest wings.
 2. This theme is outdated, it's about 3 versions behind current pterodactyl versions (missing network usage tab and activity log currently)
 3. Backup your `.env` file located in `/var/www/pterodactyl` just in case anything fails, but make sure not to give that file to anyone or expose it in any way
