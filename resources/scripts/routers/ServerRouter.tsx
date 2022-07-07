@@ -129,7 +129,7 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                     </Can>
                     {rootAdmin &&
                     <NavigationComponent link={'/admin/servers/view/' + serverId} name={'Edit Server'}
-                                         icon={faExternalLinkAlt} react={false}/>
+                                         icon={faExternalLinkAlt} react={false} external={true}/>
                     }
                 </NavigationBar>
             </CSSTransition>

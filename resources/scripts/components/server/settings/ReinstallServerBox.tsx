@@ -8,6 +8,7 @@ import { ApplicationStore } from '@/state';
 import { httpErrorToHuman } from '@/api/http';
 import tw from 'twin.macro';
 import Button from '@/components/elements/Button';
+import { faRetweet } from '@fortawesome/free-solid-svg-icons';
 
 export default () => {
     const uuid = ServerContext.useStoreState(state => state.server.data!.uuid);
@@ -42,7 +43,7 @@ export default () => {
     }, []);
 
     return (
-        <TitledGreyBox title={'Reinstall Server'} css={tw`relative`}>
+        <TitledGreyBox title={'Reinstall Server'} css={tw`relative`} icon={faRetweet}>
             <ConfirmationModal
                 title={'Confirm server reinstallation'}
                 buttonText={'Yes, reinstall server'}

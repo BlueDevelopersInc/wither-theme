@@ -14,6 +14,7 @@ import ServerContentBlock from '@/components/elements/ServerContentBlock';
 import isEqual from 'react-fast-compare';
 import CopyOnClick from '@/components/elements/CopyOnClick';
 import { formatIp } from '@/helpers';
+import { faCode, faPlug } from '@fortawesome/free-solid-svg-icons';
 
 export default () => {
     const username = useStoreState(state => state.user.data!.username);
@@ -28,7 +29,7 @@ export default () => {
             <div css={tw`md:flex`}>
                 <div css={tw`w-full md:flex-1 md:mr-10`}>
                     <Can action={'file.sftp'}>
-                        <TitledGreyBox title={'SFTP Details'} css={tw`mb-6 md:mb-10`}>
+                        <TitledGreyBox title={'SFTP Details'} css={tw`mb-6 md:mb-10`} icon={faPlug}>
                             <div>
                                 <Label>Server Address</Label>
                                 <CopyOnClick text={`sftp://${formatIp(sftp.ip)}:${sftp.port}`}>
@@ -68,7 +69,7 @@ export default () => {
                             </div>
                         </TitledGreyBox>
                     </Can>
-                    <TitledGreyBox title={'Debug Information'} css={tw`mb-6 md:mb-10`}>
+                    <TitledGreyBox title={'Debug Information'} css={tw`mb-6 md:mb-10`} icon={faCode}>
                         <div css={tw`flex items-center justify-between text-sm`}>
                             <p>Node</p>
                             <code css={tw`font-mono bg-neutral-900 rounded py-1 px-2`}>{node}</code>

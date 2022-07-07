@@ -52,7 +52,7 @@ const Navigation = styled.div`
         }
     }
 `;
-export function NavigationComponent(props: { name: string, icon: IconProp, react?: boolean, link: string, exact?: boolean, onclick?: () => void }) {
+export function NavigationComponent(props: { name: string, icon: IconProp, react?: boolean, link: string, exact?: boolean, onclick?: () => void, external?: boolean}) {
     return props.react ?? true ? (
     <NavLink to={props.link} exact={props.exact ?? false} className={"component " + (props.onclick !== undefined ? "onclick" : "")} onClick={props.onclick !== undefined ? props.onclick : () => {}}>
         <span>
@@ -61,7 +61,7 @@ export function NavigationComponent(props: { name: string, icon: IconProp, react
         </span>
     </NavLink>
     ) : (
-        <a href={props.link} rel={"noreferrer"} className={"component"}>
+        <a href={props.link} rel={"noreferrer"} className={"component"} target={props.external ?? false ? "_blank" : "_self"}>
         <span>
             <FontAwesomeIcon icon={props.icon}/>
             <span css={tw`ml-1`}>{props.name}</span>

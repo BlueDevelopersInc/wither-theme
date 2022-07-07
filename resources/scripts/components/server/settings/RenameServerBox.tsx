@@ -11,6 +11,7 @@ import { ApplicationStore } from '@/state';
 import { httpErrorToHuman } from '@/api/http';
 import Button from '@/components/elements/Button';
 import tw from 'twin.macro';
+import { faFileSignature } from '@fortawesome/free-solid-svg-icons';
 
 interface Values {
     name: string;
@@ -20,7 +21,7 @@ const RenameServerBox = () => {
     const { isSubmitting } = useFormikContext<Values>();
 
     return (
-        <TitledGreyBox title={'Change Server Name'} css={tw`relative`}>
+        <TitledGreyBox title={'Change Server Name'} css={tw`relative`} icon={faFileSignature}>
             <SpinnerOverlay visible={isSubmitting}/>
             <Form css={tw`mb-0`}>
                 <Field
